@@ -1,0 +1,6 @@
+apiVersion: v2
+name: sua-aplicacao 
+description: Um Helm chart para a aplicação Python do desafio DevOps
+type: application
+version: 0.1.0
+appVersion: 1.0.0

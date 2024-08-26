@@ -1,0 +1,18 @@
+# anel de nó único para economizar recursos em um ambiente local.
+
+apiVersion: cassandra.datastax.com/v1beta1
+kind: CassandraDatacenter
+metadata:
+  name: meu-cassandra-datacenter
+  namespace: default 
+spec:
+  clusterName: meu-cluster-cassandra
+  size: 1 # Número de nós no cluster (use 1 para um único nó)
+  storageConfig:
+    cassandraDataVolumeClaimSpec:
+      storageClassName: standard # Ou a classe de armazenamento desejada
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi # Tamanho do volume de armazenamento
