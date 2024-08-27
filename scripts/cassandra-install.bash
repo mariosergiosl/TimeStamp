@@ -1,7 +1,7 @@
-#/bin/bash
-helm repo add datastax https://datastax.github.io/helm-charts
+#!/bin/bash
+helm repo add k8ssandra https://helm.k8ssandra.io/
 helm repo update
-helm install cass-operator datastax/cass-operator --set global.imagePullSecrets[0].name=seu-image-pull-secret --namespace cass-operator --create-namespace 
-kubectl apply -f cassandra-datacenter.yaml
+helm install k8ssandra k8ssandra/k8ssandra-operator --namespace k8ssandra-operator --create-namespace 
+kubectl apply -f projeto/database/cassandra-datacenter.yaml
 kubectl get cassandradatacenter -n default
 kubectl get pods -n default
