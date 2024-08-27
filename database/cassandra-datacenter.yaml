@@ -1,18 +1,23 @@
-apiVersion: k8ssandra.io/v1alpha1  
-kind: CassandraDatacenter           
+apiVersion: cassandra.datastax.com/v1beta1
+kind: CassandraDatacenter
 metadata:
-  name: meu-cassandra-datacenter
-  namespace: default 
+  name: dc1
+  namespace: cassandra 
 spec:
-  clusterName: meu-cluster-cassandra
-  serverType: "cassandra"
+  clusterName: "dc1"
+  serverType: cassandra
   serverVersion: "4.0.3"
-  size: 1 #(cluster de 1 node :-) )
+  size: 1 # Configurar para um único nó
+  config:
+    cassandra-yaml:
+      num_tokens: 256
+      authenticator: AllowAllAuthenticator
+      authorizer: AllowAllAuthorizer 
   storageConfig:
     cassandraDataVolumeClaimSpec:
-      storageClassName: standard #classe de armazenamento????
+      storageClassName: standard # Ou o nome da sua classe de armazenamento
       accessModes:
         - ReadWriteOnce
       resources:
         requests:
-          storage: 1Gi # Tamanho do volume
+          storage: 1Gi # Ajuste o tamanho conforme necessário

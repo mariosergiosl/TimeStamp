@@ -1,0 +1,14 @@
+db_mode: cassandra 
+cassandra_contact_points: 
+  - cassandra-service # Nome do serviço do Cassandra no Kubernetes
+admin_gui_url: http://desafio:31667 
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx # ou o controlador de Ingress que você estiver usando
+  hosts:
+    - desafio
+  tls: [] # Adicione configurações de TLS, se necessário
+  paths:
+    - / # Para o Kong Proxy (API Gateway)
+    - /kong-manager # Para o Kong Manager
