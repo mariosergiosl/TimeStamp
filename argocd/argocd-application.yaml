@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd 
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.com/mario_luz/desafio-devops.git
+    targetRevision: main 
+    path: argocd 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd 
+
+  # Sincronizar automaticamente as mudanças no repositório Git
+  syncPolicy:
+    automated: {}
+
+  # Ignorar diferenças no campo `status` dos recursos, que podem ser geradas automaticamente pelo Kubernetes
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /status
+  - group: ""
+    kind: Service
+    jsonPointers:
+    - /status
+
+  # Definir o serviço ArgoCD para ser exposto via NodePort
+  resources:
+  - group: ""
+    kind: Service
+    name: argocd-server
+    namespace: argocd
+    targetState:
+      spec:
+        type: NodePort
+        ports:
+        - port: 80
+          targetPort: 8080
+          nodePort: 30080 
+        - port: 443
+          targetPort: 8080
+          nodePort: 30443
