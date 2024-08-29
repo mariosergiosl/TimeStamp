@@ -1,11 +1,12 @@
+# charts/devops-server/values.yaml
 image:
-  repository: registry.gitlab.com/seu-usuario/devops-server 
-  pullPolicy: IfNotPresent
+  repository: registry.gitlab.com/mario_luz/desafio-devops # Substitua pelos seus dados
   tag: latest
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 resources:
   limits:
@@ -14,5 +15,3 @@ resources:
   requests:
     cpu: 50m
     memory: 64Mi
-
-replicaCount: 1
