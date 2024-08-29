@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cassandra
+spec:
+  serviceName: "cassandra"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cassandra
+  template:
+    metadata:
+      labels:
+        app: cassandra
+    spec:
+      securityContext:
+        runAsUser: 0
+      containers:
+      - name: cassandra
+        image: cassandra:latest
+        ports:
+        - containerPort: 7000
+          name: intra-node
+        - containerPort: 7001
+          name: tls-intra-node
+        - containerPort: 7199
+          name: jmx
+        - containerPort: 9042
+          name: cql
+        env:
+        - name: CASSANDRA_AUTHENTICATOR
+          value: PasswordAuthenticator
+        - name: CASSANDRA_AUTHORIZER
+          value: CassandraAuthorizer
+        - name: CASSANDRA_CLUSTER_NAME
+          value: "MyCassandraCluster"
+        - name: CASSANDRA_SEEDS
+          value: "cassandra-0.cassandra.default.svc.cluster.local"
+        - name: MAX_HEAP_SIZE
+          value: "1G"
+        - name: HEAP_NEWSIZE
+          value: "512M"
+        - name: JAVA_OPTS
+          value: "-Dcassandra.logdir=/var/log/cassandra -Dlogback.configurationFile=/etc/cassandra/logback-tools.xml"
+        resources:
+          limits:
+            cpu: "2000m"
+            memory: "4Gi"
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+        volumeMounts:
+          - name: cassandra-data
+            mountPath: /var/lib/cassandra
+      volumes:
+        - name: cassandra-data
+          hostPath:   # Use hostPath para armazenamento local no nó
+            path: /data/cassandra  # Substitua pelo caminho desejado no host
+            type: DirectoryOrCreate
