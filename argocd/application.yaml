@@ -1,19 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sua-aplicacao
-  namespace: argocd
+  name: devops-server
+  namespace: argocd # Ou o namespace onde você instalou o ArgoCD
 spec:
   project: default
   source:
-    repoURL: https://gitlab.com/seu-usuario/seu-projeto.git
-    targetRevision: main 
-    path: sua-aplicacao 
-    chart: sua-aplicacao
+    repoURL: https://gitlab.com/mario_luz/desafio-devops.git
+    targetRevision: main # Ou a branch onde você armazena o código
+    path: charts/devops-server 
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    namespace: default # Ou o namespace onde você quer implantar a aplicação
