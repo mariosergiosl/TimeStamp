@@ -38,4 +38,4 @@ echo "https://${username}:${pat}@gitlab.com" > .git/credentials
 git push -u origin main || git push -u origin main -f
 
 # Remove the temporary credentials file
-rm .git/credentials
+# rm .git/credentials
