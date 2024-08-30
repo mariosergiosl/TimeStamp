@@ -27,20 +27,3 @@ spec:
     kind: Service
     jsonPointers:
     - /status
-
-  # Definir o serviço ArgoCD para ser exposto via NodePort
-  resources:
-  - group: ""
-    kind: Service
-    name: argocd-server
-    namespace: argocd
-    targetState:
-      spec:
-        type: NodePort
-        ports:
-        - port: 80
-          targetPort: 8080
-          nodePort: 30080 
-        - port: 443
-          targetPort: 8080
-          nodePort: 30443
