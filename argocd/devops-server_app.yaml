@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-server  # Nome da aplicação no ArgoCD
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.com/mario_luz/desafio-devops.git
+    targetRevision: main 
+    path: charts/devops-server 
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
