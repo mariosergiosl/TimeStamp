@@ -10,7 +10,7 @@ fi
 git add .
 
 # Fazer o commit
-git commit -m "Primeiro commit"
+git commit -m "Update"
 
 # Verificar se o remote 'origin' já existe
 if ! git remote get-url origin &> /dev/null; then
@@ -19,15 +19,15 @@ if ! git remote get-url origin &> /dev/null; then
 fi
 
 # Prompt for GitLab username
-read -p "Username for 'https://gitlab.com': " username
+#read -p "Username for 'https://gitlab.com': " username
 
 # Prompt for GitLab PAT
-read -s -p "Password for 'https://${username}@gitlab.com': " pat
-echo  # Add a newline after the password prompt
+#read -s -p "Password for 'https://${username}@gitlab.com': " pat
+#echo  # Add a newline after the password prompt
 
 # Set Git credentials temporarily for this session
-git config --local credential.helper 'store --file=.git/credentials'
-echo "https://${username}:${pat}@gitlab.com" > .git/credentials
+#git config --local credential.helper 'store --file=.git/credentials'
+#echo "https://${username}:${pat}@gitlab.com" > .git/credentials
 
 
 # Enviar as alterações para o GitLab (forçando o push na primeira vez)
