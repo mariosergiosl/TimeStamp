@@ -33,7 +33,7 @@ publish:
   stage: publish
   image: alpine/helm:latest 
   script:
-    - helm push devops-server-0.1.0.tgz oci://$CI_REGISTRY/desafio-devops 
+    - helm push devops-server-0.1.0.tgz oci://$CI_REGISTRY/desafio-devops
   artifacts:
     paths:
       - devops-server-0.1.0.tgz
