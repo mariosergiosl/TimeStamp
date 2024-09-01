@@ -10,6 +10,45 @@ fi
 # Exibe informações sobre a distribuição Linux
 lsb_release -a
 
+#################### DOCKER
+
+# Atualizar o índice de pacotes
+sudo apt update
+
+# Instalar pacotes necessários para adicionar um repositório HTTPS
+sudo apt install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+# Adicionar a chave GPG oficial do Docker
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+# Configurar o repositório estável do Docker
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Atualizar o índice de pacotes novamente
+sudo apt update
+
+# Instalar o Docker Engine
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+mkdir -p /etc/docker
+touch /etc/docker/daemon.json
+echo "{" >> /etc/docker/daemon.json
+echo "storage-driver": "overlay2", >> /etc/docker/daemon.json
+echo "log-driver": "journald" >> /etc/docker/daemon.json
+echo "}" >> /etc/docker/daemon.json
+
+#################### SYSCTL
+echo "net.ipv4.tcp_tw_reuse = 1" >> /etc/sysctl.conf
+echo "net.ipv4.ip_local_port_range = 1024 65535" >> /etc/sysctl.conf
+echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
+
 
 
 #################### K3S

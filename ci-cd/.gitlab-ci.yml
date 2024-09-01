@@ -10,8 +10,8 @@ build_image:
   services:
     - docker:dind 
   script:
-    - docker build -t $IMAGE_NAME .
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $IMAGE_NAME . # Certifique-se de que IMAGE_NAME está definido nas variáveis de ambiente
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY # Certifique-se de que as variáveis de ambiente estão definidas
 
 push_image:
   stage: push
@@ -31,7 +31,7 @@ publish:
   stage: publish
   image: alpine/helm:latest 
   script:
-    - helm push devops-server-0.1.0.tgz oci://$CI_REGISTRY/seu-projeto 
+    - helm push devops-server-0.1.0.tgz oci://$CI_REGISTRY/desafio-devops # Substitua 'seu-projeto' pelo nome real do seu projeto
   artifacts:
     paths:
       - devops-server-0.1.0.tgz
