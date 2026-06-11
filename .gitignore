@@ -1,0 +1,13 @@
+﻿# Ignorar logs temporarios locais
+files.txt
+files.txt_*
+tree.txt
+
+# Ignorar pastas de ambiente virtual locais
+.venv/
+venv/
+env/
+
+# Outros arquivos temporarios
+*.tmp
+*.log
